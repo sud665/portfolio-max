@@ -2,8 +2,12 @@ import Image from "next/image";
 import { Inter } from "next/font/google";
 import { useEffect, useState } from "react";
 
+interface MyArray {
+    [index: number]: string;
+}
+
 export default function Home() {
-    const title: string = "Hello World";
+    const title: string = "Hello";
 
     const [isComplete, setIsComplete] = useState(false);
 
@@ -12,10 +16,10 @@ export default function Home() {
     useEffect(() => {
         const mainTitle: any = document.querySelector(".main-title .pr-main");
 
-        const letters: String[] = ["JavaScript", "React", "Next.js", "JAVA"];
+        const letters: MyArray = ["JavaScript", "React", "Next.js", "JAVA"];
 
-        const speed = 200;
-        let i = 0;
+        const speed: number = 200;
+        let i: number = 0;
 
         function wait(ms: number) {
             return new Promise((res) => setTimeout(res, ms));
@@ -55,9 +59,9 @@ export default function Home() {
         };
 
         // 딜레이 기능 ( 마이크로초 )
-
+        typing();
         // 초기 실행
-        setTimeout(typing, 1500);
+        // setTimeout(typing, 1500);
     }, []);
 
     return (
