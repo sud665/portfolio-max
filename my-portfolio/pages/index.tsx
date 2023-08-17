@@ -9,10 +9,6 @@ interface MyArray {
 export default function Home() {
     const title: string = "Hello";
 
-    const [isComplete, setIsComplete] = useState(false);
-
-    useEffect(() => {}, [isComplete]);
-
     useEffect(() => {
         const mainTitle: any = document.querySelector(".main-title .pr-main");
 
@@ -27,8 +23,6 @@ export default function Home() {
 
         const typing = async () => {
             const letter = letters[i].split("");
-
-            console.log(letter);
 
             while (letter.length) {
                 await wait(speed);
@@ -55,13 +49,11 @@ export default function Home() {
 
             // 다음 순서의 글자로 지정, 타이핑 함수 다시 실행
             i = !letters[i + 1] ? 0 : i + 1;
-            typing();
+            setTimeout(() => typing(), 1500); // 수정된 부분
         };
 
-        // 딜레이 기능 ( 마이크로초 )
-        typing();
         // 초기 실행
-        // setTimeout(typing, 1500);
+        setTimeout(() => typing(), 1500);
     }, []);
 
     return (
