@@ -1,15 +1,6 @@
-import 'tailwindcss/tailwind.css';
-import '../globalStyles.scss';
+import '@/styles/globals.css'
+import type { AppProps } from 'next/app'
 
-import type {AppProps} from 'next/app';
-import {memo} from 'react';
-
-const MyApp = memo(({Component, pageProps}: AppProps): JSX.Element => {
-  return (
-    <>
-      <Component {...pageProps} />
-    </>
-  );
-});
-
-export default MyApp;
+export default function App({ Component, pageProps }: AppProps) {
+  return <Component {...pageProps} />
+}

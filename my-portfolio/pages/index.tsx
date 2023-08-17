@@ -1,33 +1,66 @@
-import dynamic from 'next/dynamic';
-import {FC, memo} from 'react';
+import Image from "next/image";
+import { Inter } from "next/font/google";
+import { useEffect, useState } from "react";
 
-import Page from '../components/Layout/Page';
-import About from '../components/Sections/About';
-import Contact from '../components/Sections/Contact';
-import Footer from '../components/Sections/Footer';
-import Hero from '../components/Sections/Hero';
-import Portfolio from '../components/Sections/Portfolio';
-import Resume from '../components/Sections/Resume';
-import Testimonials from '../components/Sections/Testimonials';
-import {homePageMeta} from '../data/data';
+interface MyArray {
+    [index: number]: string;
+}
 
-// eslint-disable-next-line react-memo/require-memo
-const Header = dynamic(() => import('../components/Sections/Header'), {ssr: false});
+export default function Home() {
+    const title: string = "Hello";
 
-const Home: FC = memo(() => {
-  const {title, description} = homePageMeta;
-  return (
-    <Page description={description} title={title}>
-      <Header />
-      <Hero />
-      <About />
-      <Resume />
-      <Portfolio />
-      <Testimonials />
-      <Contact />
-      <Footer />
-    </Page>
-  );
-});
+    useEffect(() => {
+        const mainTitle: any = document.querySelector(".main-title .pr-main");
 
-export default Home;
+        const letters: MyArray = ["JavaScript", "React", "Next.js", "JAVA"];
+
+        const speed: number = 200;
+        let i: number = 0;
+
+        function wait(ms: number) {
+            return new Promise((res) => setTimeout(res, ms));
+        }
+
+        const typing = async () => {
+            const letter = letters[i].split("");
+
+            while (letter.length) {
+                await wait(speed);
+                mainTitle.textContent += letter.shift();
+            }
+
+            // 잠시 대기
+            await wait(1500);
+
+            // 지우는 효과
+            remove();
+        };
+
+        // 글자 지우는 효과
+        const remove = async () => {
+            const letter = letters[i].split("");
+
+            while (letter.length) {
+                await wait(speed);
+
+                letter.pop();
+                mainTitle.textContent = letter.join("");
+            }
+
+            // 다음 순서의 글자로 지정, 타이핑 함수 다시 실행
+            i = !letters[i + 1] ? 0 : i + 1;
+            setTimeout(() => typing(), 1500); // 수정된 부분
+        };
+
+        // 초기 실행
+        setTimeout(() => typing(), 1500);
+    }, []);
+
+    return (
+        <main className="flex h-screen w-screen flex-col items-center justify-center">
+            <h1 className="main-title">
+                {title} <span className="pr-main"></span>
+            </h1>
+        </main>
+    );
+}
